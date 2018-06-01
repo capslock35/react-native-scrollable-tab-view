@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   tabs: {
-    height: height*0.085,
+    height: height>1000?height*0.085:height*0.075,
     flexDirection: 'row',
     justifyContent: 'space-around',
     borderWidth: 1,
