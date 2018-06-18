@@ -1,24 +1,17 @@
 const React = require('react');
-const { ViewPropTypes } = ReactNative = require('react-native');
-const PropTypes = require('prop-types');
-const createReactClass = require('create-react-class');
+const { ViewPropTypes, } = ReactNative = require('react-native');
+import PropTypes from 'prop-types';
+var createReactClass = require('create-react-class');
+
+
 const {
   StyleSheet,
   Text,
   View,
   Animated,
-  Dimensions
 } = ReactNative;
 const Button = require('./Button');
-let window = Dimensions.get('window');
-let width = window.width;
-let height = window.height;
-//IF APP OPENS ON LANDSCAPE Orientation
-if(width>height){
-  let sth=height;
-  height=width;
-  width=sth;
-}
+
 const DefaultTabBar = createReactClass({
   propTypes: {
     goToPage: PropTypes.func,
@@ -50,7 +43,7 @@ const DefaultTabBar = createReactClass({
     const fontWeight = isTabActive ? 'bold' : 'normal';
 
     return <Button
-      style={{flex: 1, }}
+      style={styles.flexOne}
       key={name}
       accessible={true}
       accessibilityLabel={name}
@@ -76,9 +69,8 @@ const DefaultTabBar = createReactClass({
       bottom: 0,
     };
 
-    const translateX = this.props.scrollValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0,  containerWidth / numberOfTabs],
+    const left = this.props.scrollValue.interpolate({
+      inputRange: [0, 1, ], outputRange: [0,  containerWidth / numberOfTabs, ],
     });
     return (
       <View style={[styles.tabs, {backgroundColor: this.props.backgroundColor, }, this.props.style, ]}>
@@ -87,17 +79,7 @@ const DefaultTabBar = createReactClass({
           const renderTab = this.props.renderTab || this.renderTab;
           return renderTab(name, page, isTabActive, this.props.goToPage);
         })}
-        <Animated.View
-          style={[
-            tabUnderlineStyle,
-            {
-              transform: [
-                { translateX },
-              ]
-            },
-            this.props.underlineStyle,
-          ]}
-        />
+        <Animated.View style={[tabUnderlineStyle, { left, }, this.props.underlineStyle, ]} />
       </View>
     );
   },
@@ -110,8 +92,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingBottom: 10,
   },
+  flexOne: {
+    flex: 1,
+  },
   tabs: {
-    height: height>1000?height*0.085:height*0.075,
+    height: 50,
     flexDirection: 'row',
     justifyContent: 'space-around',
     borderWidth: 1,

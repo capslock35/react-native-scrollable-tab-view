@@ -1,7 +1,8 @@
 const React = require('react');
-const { ViewPropTypes } = ReactNative = require('react-native');
-const PropTypes = require('prop-types');
-const createReactClass = require('create-react-class');
+const { ViewPropTypes, } = ReactNative = require('react-native');
+import PropTypes from 'prop-types';
+var createReactClass = require('create-react-class');
+
 const {
   View,
   Animated,
@@ -10,6 +11,7 @@ const {
   Text,
   Platform,
   Dimensions,
+  I18nManager,
 } = ReactNative;
 const Button = require('./Button');
 
@@ -159,8 +161,9 @@ const ScrollableTabBar = createReactClass({
       bottom: 0,
     };
 
+    const key = I18nManager.isRTL ? 'right' : 'left';
     const dynamicTabUnderline = {
-      left: this.state._leftTabUnderline,
+      [`${key}`]: this.state._leftTabUnderline,
       width: this.state._widthTabUnderline,
     };
 
@@ -169,11 +172,13 @@ const ScrollableTabBar = createReactClass({
       onLayout={this.onContainerLayout}
     >
       <ScrollView
+        automaticallyAdjustContentInsets={false}
         ref={(scrollView) => { this._scrollView = scrollView; }}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         directionalLockEnabled={true}
+        onScroll={this.props.onScroll}
         bounces={false}
         scrollsToTop={false}
       >
