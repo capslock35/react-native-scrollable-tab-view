@@ -9,9 +9,18 @@ const {
   Text,
   View,
   Animated,
+  Dimensions
 } = ReactNative;
 const Button = require('./Button');
-
+let window = Dimensions.get('window');
+let width = window.width;
+let height = window.height;
+//IF APP OPENS ON LANDSCAPE Orientation
+if(width>height){
+  let sth=height;
+  height=width;
+  width=sth;
+}
 const DefaultTabBar = createReactClass({
   propTypes: {
     goToPage: PropTypes.func,
@@ -96,7 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tabs: {
-    height: 50,
+    height: height>1000?height*0.085:height*0.075,
     flexDirection: 'row',
     justifyContent: 'space-around',
     borderWidth: 1,
